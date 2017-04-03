@@ -8,20 +8,20 @@ from tests import outputs
 
 
 class NaturalPersonAdapter(adapter.Adapter):
-    first_name = adapter.CharField()
-    last_name = adapter.CharField()
+    first_name = adapter.Field()
+    last_name = adapter.Field()
 
 
 class AddressAdapter(adapter.Adapter):
     class Meta(object):
         model = outputs.Address
 
-    line1 = adapter.CharField(source='address_street.0')
-    line2 = adapter.CharField(source='address_street.1', default='')
-    postal_code = adapter.CharField(source='address_zipcode', default='')
-    city = adapter.CharField(source='address_city')
-    region = adapter.CharField(source='address_state')
-    country = adapter.CharField(source='address_country')
+    line1 = adapter.Field(source='address_street.0')
+    line2 = adapter.Field(source='address_street.1', default='')
+    postal_code = adapter.Field(source='address_zipcode', default='')
+    city = adapter.Field(source='address_city')
+    region = adapter.Field(source='address_state')
+    country = adapter.Field(source='address_country')
 
 
 class CustomerAdapter(NaturalPersonAdapter):
