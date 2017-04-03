@@ -21,7 +21,7 @@ class AdapterTest(unittest.TestCase):
         pass
 
     def test_object(self):
-        data = inputs.Customer({
+        data = inputs.Customer(**{
             'first_name': 'Betty',
             'last_name': 'Gowin',
             'address_street': ['3385 Gerald L. Bates Drive'],
@@ -31,10 +31,10 @@ class AdapterTest(unittest.TestCase):
             'address_country': 'US',
         })
         actual = adapters.CustomerAdapter(data).adapt()
-        expected = outputs.Customer({
+        expected = outputs.Customer(**{
             'first_name': 'Betty',
             'last_name': 'Gowin',
-            'address': outputs.Address({
+            'address': outputs.Address(**{
                 'line1': '3385 Gerald L. Bates Drive',
                 'line2': '',
                 'postal_code': '02143',
