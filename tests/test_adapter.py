@@ -25,7 +25,7 @@ class AdapterTest(unittest.TestCase):
             'first_name': 'Betty',
             'last_name': 'Gowin',
             'address_street': ['3385 Gerald L. Bates Drive'],
-            'address_zip_code': '02143',
+            'address_zipcode': '02143',
             'address_city': 'Somerville',
             'address_state': 'US-MA',
             'address_country': 'US',
@@ -43,4 +43,13 @@ class AdapterTest(unittest.TestCase):
                 'country': 'US',
             })
         })
-        self.assertEqual(actual, expected)
+
+        self.assertEqual(actual.first_name, expected.first_name)
+        self.assertEqual(actual.last_name, expected.last_name)
+        self.assertEqual(actual.address.line1, expected.address.line1)
+        self.assertEqual(actual.address.line2, expected.address.line2)
+        self.assertEqual(
+            actual.address.postal_code, expected.address.postal_code)
+        self.assertEqual(actual.address.city, expected.address.city)
+        self.assertEqual(actual.address.region, expected.address.region)
+        self.assertEqual(actual.address.country, expected.address.country)
