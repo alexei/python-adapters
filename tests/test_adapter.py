@@ -11,15 +11,6 @@ import outputs
 
 
 class AdapterTest(unittest.TestCase):
-    def test_list(self):
-        pass
-
-    def test_tuple(self):
-        pass
-
-    def test_dict(self):
-        pass
-
     def test_object(self):
         data = inputs.Customer(**{
             'first_name': 'Betty',
