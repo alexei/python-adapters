@@ -11,7 +11,7 @@ import outputs
 
 
 class AdapterTest(unittest.TestCase):
-    def test_object(self):
+    def test_object_to_object(self):
         data = inputs.Customer(**{
             'first_name': 'Betty',
             'last_name': 'Gowin',
@@ -44,3 +44,15 @@ class AdapterTest(unittest.TestCase):
         self.assertEqual(actual.address.city, expected.address.city)
         self.assertEqual(actual.address.region, expected.address.region)
         self.assertEqual(actual.address.country, expected.address.country)
+
+    def test_dict_to_dict(self):
+        data = {
+            'first': 'Jacquelyn',
+            'last': 'Phillips',
+        }
+        actual = adapters.PersonDictAdapter().adapt(data)
+        expected = {
+            'first_name': 'Jacquelyn',
+            'last_name': 'Phillips',
+        }
+        self.assertDictEqual(actual, expected)
