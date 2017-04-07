@@ -152,5 +152,8 @@ class Adapter(BaseField):
         for field_name, field in self.fields.iteritems():
             value = field.get_attribute(data or self.data)
             adapted_value = field.adapt(value)
-            setattr(obj, field_name, adapted_value)
+            if isinstance(obj, collections.Mapping):
+                obj[field_name] = adapted_value
+            else:
+                setattr(obj, field_name, adapted_value)
         return obj
