@@ -29,3 +29,11 @@ class CustomerAdapter(NaturalPersonAdapter):
         model = outputs.Customer
 
     address = AddressAdapter(source='*')
+
+
+class PersonDictAdapter(adapter.Adapter):
+    class Meta(object):
+        model = dict
+
+    first_name = adapter.Field(source='first')
+    last_name = adapter.Field(source='last')
