@@ -147,7 +147,7 @@ class Adapter(BaseField):
 
     def adapt(self, data=None):
         meta = getattr(self, 'Meta', None)
-        model_cls = getattr(meta, 'model', Struct)
+        model_cls = getattr(meta, 'model', dict)
         obj = model_cls()
         for field_name, field in self.fields.iteritems():
             value = field.get_attribute(data or self.data)
