@@ -14,14 +14,6 @@ class undefined:
     pass
 
 
-class Struct(object):
-    def __init__(self, **data):
-        self.__dict__.update(data)
-
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
-
-
 class BindingDict(collections.MutableMapping):
     def __init__(self, adapter):
         self.adapter = adapter
@@ -147,7 +139,7 @@ class Adapter(BaseField):
 
     def adapt(self, data=None):
         meta = getattr(self, 'Meta', None)
-        model_cls = getattr(meta, 'model', Struct)
+        model_cls = getattr(meta, 'model', dict)
         obj = model_cls()
         for field_name, field in self.fields.iteritems():
             value = field.get_attribute(data or self.data)

@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 
-class Thing(object):
+class Struct(object):
     def __init__(self, **data):
         self.__dict__.update(data)
 

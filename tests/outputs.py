@@ -3,12 +3,12 @@
 from __future__ import unicode_literals
 from __future__ import absolute_import
 
-from tests.utils import Thing
+from tests.utils import Struct
 
 
-class Customer(Thing):
+class Customer(Struct):
     pass
 
 
-class Address(Thing):
+class Address(Struct):
     pass
