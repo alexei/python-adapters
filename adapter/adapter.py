@@ -47,7 +47,7 @@ def get_attribute(obj, attrs):
         try:
             if isinstance(obj, collections.Mapping):
                 obj = obj[attr]
-            elif isinstance(obj, (list, tuple)):
+            elif isinstance(obj, collections.Iterable):
                 obj = obj[int(attr)]
             else:
                 obj = getattr(obj, attr)
