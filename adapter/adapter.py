@@ -70,11 +70,12 @@ class BaseField(object):
         if field_name == self.source:
             raise ValueError((
                 "The `source='{field_name}'` kwarg is redundant on "
-                "adapter `{adapter_name}. Remove the `source` kwarg."
-            ).format({
-                'field_name': field_name,
-                'adapter_name': adapter.__class__.__name__
-            }))
+                "field `{adapter_name}.{field_name}`. "
+                "Remove the `source` kwarg."
+            ).format(
+                field_name=field_name,
+                adapter_name=adapter.__class__.__name__,
+            ))
 
         self.field_name = field_name
         self.adapter = adapter
