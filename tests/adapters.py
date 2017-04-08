@@ -37,3 +37,4 @@ class PersonDictAdapter(adapter.Adapter):
 
     first_name = adapter.Field(source='first')
     last_name = adapter.Field(source='last')
+    birthday = adapter.Field(source='dob', required=False)

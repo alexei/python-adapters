@@ -61,9 +61,10 @@ def get_attribute(obj, attrs):
 
 
 class BaseField(object):
-    def __init__(self, source=None, default=undefined):
+    def __init__(self, source=None, default=undefined, required=True):
         self.source = source
         self.default = default
+        self.required = required
 
     def bind(self, field_name, adapter):
         if field_name == self.source:
@@ -88,10 +89,21 @@ class BaseField(object):
 
     def get_attribute(self, obj):
         value = get_attribute(obj, self.lookup_attrs)
-        if value is not undefined:
-            return value
+        if value is undefined:
+            if self.default is not undefined:
+                return self.default
+            elif self.required:
+                raise ValueError((
+                    "Required value not found for field "
+                    "`{adapter_name}.{field_name}`. Provide a default value."
+                ).format(
+                    adapter_name=self.adapter.__class__.__name__,
+                    field_name=self.field_name,
+                ))
+            else:
+                return undefined
         else:
-            return self.default
+            return value
 
     def adapt(self, data):
         return data
@@ -143,6 +155,8 @@ class Adapter(BaseField):
         obj = model_cls()
         for field_name, field in self.fields.iteritems():
             value = field.get_attribute(data or self.data)
+            if value is undefined:
+                continue
             adapted_value = field.adapt(value)
             if isinstance(obj, collections.Mapping):
                 obj[field_name] = adapted_value
