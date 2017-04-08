@@ -14,14 +14,6 @@ class undefined:
     pass
 
 
-class Struct(object):
-    def __init__(self, **data):
-        self.__dict__.update(data)
-
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
-
-
 class BindingDict(collections.MutableMapping):
     def __init__(self, adapter):
         self.adapter = adapter
