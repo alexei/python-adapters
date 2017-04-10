@@ -134,8 +134,9 @@ class Field(BaseField):
 
 @six.add_metaclass(AdapterMetaClass)
 class Adapter(BaseField):
-    def __init__(self, data=None, *args, **kwargs):
+    def __init__(self, data=None, instance=None, *args, **kwargs):
         self.data = data
+        self.instance = instance
 
         super(Adapter, self).__init__(*args, **kwargs)
 
