@@ -45,6 +45,20 @@ class AdapterTest(unittest.TestCase):
         self.assertEqual(actual.address.region, expected.address.region)
         self.assertEqual(actual.address.country, expected.address.country)
 
+    def test_object_to_existing_object(self):
+        data = inputs.Customer(**{
+            'first_name': 'Betty',
+            'last_name': 'Gowin',
+            'address_street': ['3385 Gerald L. Bates Drive'],
+            'address_zipcode': '02143',
+            'address_city': 'Somerville',
+            'address_state': 'US-MA',
+            'address_country': 'US',
+        })
+        instance = outputs.Customer()
+        actual = adapters.CustomerAdapter(data, instance=instance).adapt()
+        self.assertEqual(actual, instance)
+
     def test_dict_to_dict(self):
         data = {
             'first': 'Jacquelyn',

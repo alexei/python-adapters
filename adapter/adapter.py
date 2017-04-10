@@ -134,8 +134,9 @@ class Field(BaseField):
 
 @six.add_metaclass(AdapterMetaClass)
 class Adapter(BaseField):
-    def __init__(self, data=None, *args, **kwargs):
+    def __init__(self, data=None, instance=None, *args, **kwargs):
         self.data = data
+        self.instance = instance
 
         super(Adapter, self).__init__(*args, **kwargs)
 
@@ -151,16 +152,22 @@ class Adapter(BaseField):
         return copy.deepcopy(self.declared_fields)
 
     def adapt(self, data=None):
-        meta = getattr(self, 'Meta', None)
-        model_cls = getattr(meta, 'model', dict)
-        obj = model_cls()
+        instance = self.get_instance()
         for field_name, field in self.fields.iteritems():
             value = field.get_attribute(data or self.data)
             if value is undefined:
                 continue
             adapted_value = field.adapt(value)
-            if isinstance(obj, collections.Mapping):
-                obj[field_name] = adapted_value
+            if isinstance(instance, collections.Mapping):
+                instance[field_name] = adapted_value
             else:
-                setattr(obj, field_name, adapted_value)
-        return obj
+                setattr(instance, field_name, adapted_value)
+        return instance
+
+    def get_instance(self):
+        if self.instance:
+            return self.instance
+        else:
+            meta = getattr(self, 'Meta', None)
+            model_cls = getattr(meta, 'model', dict)
+            return model_cls()
