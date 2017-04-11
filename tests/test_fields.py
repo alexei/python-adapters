@@ -22,3 +22,13 @@ class FieldsTest(unittest.TestCase):
         actual = adapters.IntField().adapt('123456')
         expected = 123456
         self.assertEqual(actual, expected)
+
+    def test_float_field(self):
+        actual = adapters.FloatField().adapt(3.14159265359)
+        expected = 3.14159265359
+        self.assertEqual(actual, expected)
+
+    def test_float_field_from_string(self):
+        actual = adapters.FloatField().adapt('3.14159265359')
+        expected = 3.14159265359
+        self.assertEqual(actual, expected)

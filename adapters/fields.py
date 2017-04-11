@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from .base import BaseField
 
 
-__all__ = ['Field', 'CharField', 'IntField']
+__all__ = ['Field', 'CharField', 'FloatField', 'IntField']
 
 
 class Field(BaseField):
@@ -15,6 +15,11 @@ class Field(BaseField):
 class CharField(BaseField):
     def adapt(self, data):
         return unicode(data)
+
+
+class FloatField(BaseField):
+    def adapt(self, data):
+        return float(data)
 
 
 class IntField(BaseField):
