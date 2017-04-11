@@ -7,11 +7,14 @@ from decimal import Decimal
 from .base import BaseField
 
 
-__all__ = ['Field', 'CharField', 'DecimalField', 'FloatField', 'IntField']
+__all__ = [
+    'BooleanField', 'CharField', 'DecimalField', 'Field', 'FloatField',
+    'IntField']
 
 
-class Field(BaseField):
-    pass
+class BooleanField(BaseField):
+    def adapt(self, data):
+        return bool(data)
 
 
 class CharField(BaseField):
@@ -22,6 +25,10 @@ class CharField(BaseField):
 class DecimalField(BaseField):
     def adapt(self, data):
         return Decimal(data)
+
+
+class Field(BaseField):
+    pass
 
 
 class FloatField(BaseField):

@@ -43,3 +43,18 @@ class FieldsTest(unittest.TestCase):
         actual = adapters.DecimalField().adapt('0.7350977618')
         expected = Decimal(0.7350977618)
         self.assertAlmostEqual(actual, expected)
+
+    def test_boolean_field(self):
+        actual = adapters.BooleanField().adapt(True)
+        self.assertTrue(actual)
+
+    def test_boolean_field_from_string(self):
+        actual = adapters.BooleanField().adapt('Lorem ipsum')
+        self.assertTrue(actual)
+
+        actual = adapters.BooleanField().adapt('')
+        self.assertFalse(actual)
+
+    def test_boolean_field_from_null(self):
+        actual = adapters.BooleanField().adapt(None)
+        self.assertFalse(actual)
