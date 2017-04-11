@@ -9,7 +9,6 @@ import adapters
 
 class FieldsTest(unittest.TestCase):
     def test_char_field(self):
-        field = adapters.CharField()
-        actual = field.adapt('Los Angeles')
+        actual = adapters.CharField().adapt('Los Angeles')
         expected = 'Los Angeles'
         self.assertEqual(actual, expected)
