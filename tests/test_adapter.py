@@ -70,3 +70,12 @@ class AdapterTest(unittest.TestCase):
             'last_name': 'Phillips',
         }
         self.assertDictEqual(actual, expected)
+
+    def test_list_to_dict(self):
+        data = ['Paul', 'G.', 'Hickey']
+        actual = adapters.ListToDictAdapter().adapt(data)
+        expected = {
+            'first_name': 'Paul',
+            'last_name': 'Hickey',
+        }
+        self.assertDictEqual(actual, expected)
