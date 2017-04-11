@@ -1,135 +1,19 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+from __future__ import absolute_import
 
 import collections
 import copy
 import six
 
-
-__all__ = ['Adapter', 'Field']
-
-
-class undefined:
-    pass
+from .base import BaseField
+from .meta import AdapterMetaClass
+from .utils import BindingDict
+from .utils import undefined
 
 
-class BindingDict(collections.MutableMapping):
-    def __init__(self, adapter):
-        self.adapter = adapter
-        self.fields = collections.OrderedDict()
-
-    def __setitem__(self, key, field):
-        self.fields[key] = field
-        field.bind(key, self.adapter)
-
-    def __getitem__(self, key):
-        return self.fields[key]
-
-    def __delitem__(self, key):
-        del self.fields[key]
-
-    def __iter__(self):
-        return iter(self.fields)
-
-    def __len__(self):
-        return len(self.fields)
-
-    def __repr__(self):
-        return dict.__repr__(self.fields)
-
-
-def get_attribute(obj, attrs):
-    for attr in attrs:
-        if obj is None:
-            return undefined
-
-        try:
-            if isinstance(obj, collections.Mapping):
-                obj = obj[attr]
-            elif isinstance(obj, collections.Iterable):
-                obj = obj[int(attr)]
-            else:
-                obj = getattr(obj, attr)
-        except Exception:
-            return undefined
-
-        if callable(obj):
-            obj = obj()
-
-    return obj
-
-
-class BaseField(object):
-    def __init__(self, source=None, default=undefined, required=True):
-        self.source = source
-        self.default = default
-        self.required = required
-
-    def bind(self, field_name, adapter):
-        if field_name == self.source:
-            raise ValueError((
-                "The `source='{field_name}'` kwarg is redundant on "
-                "field `{adapter_name}.{field_name}`. "
-                "Remove the `source` kwarg."
-            ).format(
-                field_name=field_name,
-                adapter_name=adapter.__class__.__name__,
-            ))
-
-        self.field_name = field_name
-        self.adapter = adapter
-
-        if self.source is None:
-            self.source = self.field_name
-
-        if self.source == '*':
-            self.lookup_attrs = []
-        else:
-            self.lookup_attrs = self.source.split('.')
-
-    def get_attribute(self, obj):
-        value = get_attribute(obj, self.lookup_attrs)
-        if value is undefined:
-            if self.default is not undefined:
-                return self.default
-            elif self.required:
-                raise ValueError((
-                    "Required value not found for field "
-                    "`{adapter_name}.{field_name}`. Provide a default value."
-                ).format(
-                    adapter_name=self.adapter.__class__.__name__,
-                    field_name=self.field_name,
-                ))
-            else:
-                return undefined
-        else:
-            return value
-
-    def adapt(self, data):
-        return data
-
-
-class AdapterMetaClass(type):
-    def __new__(meta, name, bases, attrs):
-        fields = [
-            (key, attrs.pop(key))
-            for key in attrs.keys() if isinstance(attrs[key], BaseField)
-        ]
-
-        for base in reversed(bases):
-            if hasattr(base, 'declared_fields'):
-                fields = list(base.declared_fields.items()) + fields
-
-        attrs['declared_fields'] = collections.OrderedDict(fields)
-
-        cls = super(AdapterMetaClass, meta).__new__(meta, name, bases, attrs)
-
-        return cls
-
-
-class Field(BaseField):
-    pass
+__all__ = ['Adapter']
 
 
 @six.add_metaclass(AdapterMetaClass)
