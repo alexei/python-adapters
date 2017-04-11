@@ -5,14 +5,12 @@ from __future__ import absolute_import
 
 import unittest
 
-import adapters
-import inputs
-import outputs
+import fixtures
 
 
 class AdapterTest(unittest.TestCase):
     def test_object_to_object(self):
-        data = inputs.Customer(**{
+        data = fixtures.RemoteCustomer(**{
             'first_name': 'Betty',
             'last_name': 'Gowin',
             'address_street': ['3385 Gerald L. Bates Drive'],
@@ -21,11 +19,11 @@ class AdapterTest(unittest.TestCase):
             'address_state': 'US-MA',
             'address_country': 'US',
         })
-        actual = adapters.CustomerAdapter(data).adapt()
-        expected = outputs.Customer(**{
+        actual = fixtures.LocalCustomerAdapter(data).adapt()
+        expected = fixtures.LocalCustomer(**{
             'first_name': 'Betty',
             'last_name': 'Gowin',
-            'address': outputs.Address(**{
+            'address': fixtures.LocalAddress(**{
                 'line1': '3385 Gerald L. Bates Drive',
                 'line2': '',
                 'postal_code': '02143',
@@ -46,7 +44,7 @@ class AdapterTest(unittest.TestCase):
         self.assertEqual(actual.address.country, expected.address.country)
 
     def test_object_to_existing_object(self):
-        data = inputs.Customer(**{
+        data = fixtures.RemoteCustomer(**{
             'first_name': 'Betty',
             'last_name': 'Gowin',
             'address_street': ['3385 Gerald L. Bates Drive'],
@@ -55,8 +53,8 @@ class AdapterTest(unittest.TestCase):
             'address_state': 'US-MA',
             'address_country': 'US',
         })
-        instance = outputs.Customer()
-        actual = adapters.CustomerAdapter(data, instance=instance).adapt()
+        instance = fixtures.LocalCustomer()
+        actual = fixtures.LocalCustomerAdapter(data, instance=instance).adapt()
         self.assertEqual(actual, instance)
 
     def test_dict_to_dict(self):
@@ -64,7 +62,7 @@ class AdapterTest(unittest.TestCase):
             'first': 'Jacquelyn',
             'last': 'Phillips',
         }
-        actual = adapters.PersonDictAdapter().adapt(data)
+        actual = fixtures.PersonDictAdapter().adapt(data)
         expected = {
             'first_name': 'Jacquelyn',
             'last_name': 'Phillips',
@@ -73,7 +71,7 @@ class AdapterTest(unittest.TestCase):
 
     def test_list_to_dict(self):
         data = ['Paul', 'G.', 'Hickey']
-        actual = adapters.ListToDictAdapter().adapt(data)
+        actual = fixtures.ListToDictAdapter().adapt(data)
         expected = {
             'first_name': 'Paul',
             'last_name': 'Hickey',
