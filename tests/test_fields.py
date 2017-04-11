@@ -2,10 +2,13 @@
 
 from __future__ import unicode_literals
 
+import datetime
 from decimal import Decimal
 import unittest
 
 import adapters
+
+import dateutil.tz
 
 
 class FieldsTest(unittest.TestCase):
@@ -58,3 +61,29 @@ class FieldsTest(unittest.TestCase):
     def test_boolean_field_from_null(self):
         actual = adapters.BooleanField().adapt(None)
         self.assertFalse(actual)
+
+    def test_time_field(self):
+        now = datetime.datetime.today().time()
+        actual = adapters.TimeField().adapt(now)
+        expected = now
+        self.assertEqual(actual, expected)
+
+    def test_time_field_from_string(self):
+        tzoffset = dateutil.tz.tzoffset(None, 7200)
+        time = datetime.time(13, 14, 15, 16, tzinfo=tzoffset)
+
+        actual = adapters.TimeField().adapt('13:14:15.000016+02:00')
+        expected = time
+        self.assertEqual(actual, expected)
+
+        actual = adapters.TimeField().adapt('13:14:15.000016')
+        expected = datetime.time(13, 14, 15, 16)
+        self.assertEqual(actual, expected)
+
+        actual = adapters.TimeField().adapt(time.strftime('%H:%M:%S'))
+        expected = datetime.time(13, 14, 15)
+        self.assertEqual(actual, expected)
+
+        actual = adapters.TimeField().adapt(time.strftime('%H:%M'))
+        expected = datetime.time(13, 14)
+        self.assertEqual(actual, expected)

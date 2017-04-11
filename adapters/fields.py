@@ -2,6 +2,8 @@
 
 from __future__ import unicode_literals
 
+import datetime
+import dateutil.parser
 from decimal import Decimal
 
 from .base import BaseField
@@ -9,7 +11,7 @@ from .base import BaseField
 
 __all__ = [
     'BooleanField', 'CharField', 'DecimalField', 'Field', 'FloatField',
-    'IntField']
+    'IntField', 'TimeField']
 
 
 class BooleanField(BaseField):
@@ -39,3 +41,13 @@ class FloatField(BaseField):
 class IntField(BaseField):
     def adapt(self, data):
         return int(data)
+
+
+class TimeField(BaseField):
+    def adapt(self, data):
+        if isinstance(data, datetime.time):
+            return data
+        elif isinstance(data, (str, unicode)):
+            return dateutil.parser.parse(data).timetz()
+        else:
+            raise ValueError("Invalid time argument")
