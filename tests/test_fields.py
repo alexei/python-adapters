@@ -12,3 +12,13 @@ class FieldsTest(unittest.TestCase):
         actual = adapters.CharField().adapt('Los Angeles')
         expected = 'Los Angeles'
         self.assertEqual(actual, expected)
+
+    def test_int_field(self):
+        actual = adapters.IntField().adapt(123456)
+        expected = 123456
+        self.assertEqual(actual, expected)
+
+    def test_int_field_from_string(self):
+        actual = adapters.IntField().adapt('123456')
+        expected = 123456
+        self.assertEqual(actual, expected)
