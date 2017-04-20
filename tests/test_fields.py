@@ -87,3 +87,15 @@ class FieldsTest(unittest.TestCase):
         actual = adapters.TimeField().adapt(time.strftime('%H:%M'))
         expected = datetime.time(13, 14)
         self.assertEqual(actual, expected)
+
+    def test_date_field(self):
+        today = datetime.datetime.today().date()
+        actual = adapters.DateField().adapt(today)
+        expected = today
+        self.assertEqual(actual, expected)
+
+    def test_date_field_from_string(self):
+        date = datetime.date(1986, 7, 25)
+        actual = adapters.DateField().adapt(date.strftime('%Y-%m-%d'))
+        expected = date
+        self.assertEqual(actual, expected)
