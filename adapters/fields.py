@@ -13,6 +13,7 @@ __all__ = [
     'BooleanField',
     'CharField',
     'DateField',
+    'DateTimeField',
     'DecimalField',
     'Field',
     'FloatField',
@@ -37,6 +38,16 @@ class DateField(BaseField):
             return data
         elif isinstance(data, (str, unicode)):
             return dateutil.parser.parse(data).date()
+        else:
+            raise ValueError("Invalid date argument")
+
+
+class DateTimeField(BaseField):
+    def adapt(self, data):
+        if isinstance(data, datetime.datetime):
+            return data
+        elif isinstance(data, (str, unicode)):
+            return dateutil.parser.parse(data)
         else:
             raise ValueError("Invalid date argument")
 
