@@ -87,3 +87,45 @@ class FieldsTest(unittest.TestCase):
         actual = adapters.TimeField().adapt(time.strftime('%H:%M'))
         expected = datetime.time(13, 14)
         self.assertEqual(actual, expected)
+
+    def test_date_field(self):
+        today = datetime.datetime.today().date()
+        actual = adapters.DateField().adapt(today)
+        expected = today
+        self.assertEqual(actual, expected)
+
+    def test_date_field_from_string(self):
+        date = datetime.date(1986, 7, 25)
+        actual = adapters.DateField().adapt(date.strftime('%Y-%m-%d'))
+        expected = date
+        self.assertEqual(actual, expected)
+
+    def test_datetime_field(self):
+        now = datetime.datetime.today()
+        actual = adapters.DateTimeField().adapt(now)
+        expected = now
+        self.assertEqual(actual, expected)
+
+    def test_datetime_field_from_string(self):
+        tzoffset = dateutil.tz.tzoffset(None, 7200)
+        time = datetime.datetime(1986, 7, 25, 13, 14, 15, 16, tzinfo=tzoffset)
+
+        data = '1986-07-25 13:14:15.000016+02:00'
+        actual = adapters.DateTimeField().adapt(data)
+        expected = time
+        self.assertEqual(actual, expected)
+
+        data = '1986-07-25 13:14:15.000016'
+        actual = adapters.DateTimeField().adapt(data)
+        expected = datetime.datetime(1986, 7, 25, 13, 14, 15, 16)
+        self.assertEqual(actual, expected)
+
+        data = '1986-07-25 13:14:15'
+        actual = adapters.DateTimeField().adapt(data)
+        expected = datetime.datetime(1986, 7, 25, 13, 14, 15)
+        self.assertEqual(actual, expected)
+
+        data = '1986-07-25 13:14'
+        actual = adapters.DateTimeField().adapt(data)
+        expected = datetime.datetime(1986, 7, 25, 13, 14)
+        self.assertEqual(actual, expected)

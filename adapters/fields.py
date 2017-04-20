@@ -10,8 +10,16 @@ from .base import BaseField
 
 
 __all__ = [
-    'BooleanField', 'CharField', 'DecimalField', 'Field', 'FloatField',
-    'IntField', 'TimeField']
+    'BooleanField',
+    'CharField',
+    'DateField',
+    'DateTimeField',
+    'DecimalField',
+    'Field',
+    'FloatField',
+    'IntField',
+    'TimeField',
+]
 
 
 class BooleanField(BaseField):
@@ -22,6 +30,26 @@ class BooleanField(BaseField):
 class CharField(BaseField):
     def adapt(self, data):
         return unicode(data)
+
+
+class DateField(BaseField):
+    def adapt(self, data):
+        if isinstance(data, datetime.date):
+            return data
+        elif isinstance(data, (str, unicode)):
+            return dateutil.parser.parse(data).date()
+        else:
+            raise ValueError("Invalid date argument")
+
+
+class DateTimeField(BaseField):
+    def adapt(self, data):
+        if isinstance(data, datetime.datetime):
+            return data
+        elif isinstance(data, (str, unicode)):
+            return dateutil.parser.parse(data)
+        else:
+            raise ValueError("Invalid date argument")
 
 
 class DecimalField(BaseField):
