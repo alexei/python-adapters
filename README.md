@@ -71,7 +71,7 @@ How do you create local instances from the result returned by the API? Enter ada
 
 ## Declaring adapters
 
-Declaring an adapter is as simply as inheriting from `adapters.Adapter`
+Declaring an adapter is as simple as inheriting from `adapters.Adapter`.
 
 The `data` argument can be omitted and passed to the `.adapt()` method. See [Adapting data](#adapting-data) below.
 
