@@ -10,6 +10,7 @@ from .base import BaseField
 
 
 __all__ = [
+    'AdapterMethodField',
     'BooleanField',
     'CharField',
     'DateField',
@@ -20,6 +21,19 @@ __all__ = [
     'TimeField',
     'VerbatimField',
 ]
+
+
+class AdapterMethodField(BaseField):
+    def __init__(self, method_name=None):
+        self.method_name = method_name
+
+    def bind(self, field_name, adapter):
+        self.field_name = field_name
+        self.adapter = adapter
+
+    def get_attribute(self, obj):
+        metod_name = self.method_name or 'get_' + self.field_name
+        return getattr(self.adapter, metod_name)(obj)
 
 
 class BooleanField(BaseField):

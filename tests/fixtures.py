@@ -58,3 +58,22 @@ class PersonDictAdapter(adapters.Adapter):
 class ListToDictAdapter(adapters.Adapter):
     first_name = adapters.VerbatimField(source='0')
     last_name = adapters.VerbatimField(source='2')
+
+
+class MethodicalAdapter(adapters.Adapter):
+    min = adapters.AdapterMethodField()
+    max = adapters.AdapterMethodField()
+    sum = adapters.AdapterMethodField(method_name='compute_sum')
+    avg = adapters.AdapterMethodField(method_name='compute_avg')
+
+    def get_min(self, data):
+        return min(data)
+
+    def get_max(self, data):
+        return max(data)
+
+    def compute_sum(self, data):
+        return sum(data)
+
+    def compute_avg(self, data):
+        return sum(data) / len(data)

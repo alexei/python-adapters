@@ -6,9 +6,10 @@ import datetime
 from decimal import Decimal
 import unittest
 
-import adapters
-
 import dateutil.tz
+
+import adapters
+import fixtures
 
 
 class FieldsTest(unittest.TestCase):
@@ -129,3 +130,14 @@ class FieldsTest(unittest.TestCase):
         actual = adapters.DateTimeField().adapt(data)
         expected = datetime.datetime(1986, 7, 25, 13, 14)
         self.assertEqual(actual, expected)
+
+    def test_adapter_method_field(self):
+        data = [1, 2, 3, 4, 5]
+        actual = fixtures.MethodicalAdapter().adapt(data)
+        expected = {
+            'min': 1,
+            'max': 5,
+            'sum': 15,
+            'avg': 3,
+        }
+        self.assertDictEqual(actual, expected)
