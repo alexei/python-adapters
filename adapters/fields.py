@@ -15,10 +15,10 @@ __all__ = [
     'DateField',
     'DateTimeField',
     'DecimalField',
-    'Field',
     'FloatField',
     'IntField',
     'TimeField',
+    'VerbatimField',
 ]
 
 
@@ -57,7 +57,7 @@ class DecimalField(BaseField):
         return Decimal(data)
 
 
-class Field(BaseField):
+class VerbatimField(BaseField):
     pass
 
 
