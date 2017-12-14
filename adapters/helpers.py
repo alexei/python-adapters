@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
-from __future__ import absolute_import
+
+
 
 import collections
 
@@ -26,7 +26,7 @@ def get_attribute(obj, attrs):
         except Exception:
             return undefined
 
-        if callable(obj):
+        if isinstance(obj, collections.Callable):
             obj = obj()
 
     return obj

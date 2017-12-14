@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
-from __future__ import absolute_import
+
+
 
 import collections
 import copy
@@ -28,7 +28,7 @@ class Adapter(BaseField):
     def fields(self):
         if not hasattr(self, '_fields'):
             self._fields = BindingDict(self)
-            for key, value in self.get_fields().iteritems():
+            for key, value in self.get_fields().items():
                 self._fields[key] = value
         return self._fields
 
@@ -37,7 +37,7 @@ class Adapter(BaseField):
 
     def adapt(self, data=None):
         instance = self.get_instance()
-        for field_name, field in self.fields.iteritems():
+        for field_name, field in self.fields.items():
             value = field.get_attribute(data or self.data)
             if value is undefined:
                 continue
