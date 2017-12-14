@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-
-
 from .helpers import get_attribute
 from .utils import undefined
 

@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-
-
 import collections
 
 from .base import BaseField

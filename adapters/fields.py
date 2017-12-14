@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-
 import datetime
 import dateutil.parser
 from decimal import Decimal
