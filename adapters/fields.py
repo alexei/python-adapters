@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
+
 
 import datetime
 import dateutil.parser
@@ -43,14 +43,14 @@ class BooleanField(BaseField):
 
 class CharField(BaseField):
     def adapt(self, data):
-        return unicode(data)
+        return str(data)
 
 
 class DateField(BaseField):
     def adapt(self, data):
         if isinstance(data, datetime.date):
             return data
-        elif isinstance(data, (str, unicode)):
+        elif isinstance(data, str):
             return dateutil.parser.parse(data).date()
         else:
             raise ValueError("Invalid date argument")
@@ -60,7 +60,7 @@ class DateTimeField(BaseField):
     def adapt(self, data):
         if isinstance(data, datetime.datetime):
             return data
-        elif isinstance(data, (str, unicode)):
+        elif isinstance(data, str):
             return dateutil.parser.parse(data)
         else:
             raise ValueError("Invalid date argument")
@@ -89,7 +89,7 @@ class TimeField(BaseField):
     def adapt(self, data):
         if isinstance(data, datetime.time):
             return data
-        elif isinstance(data, (str, unicode)):
+        elif isinstance(data, str):
             return dateutil.parser.parse(data).timetz()
         else:
             raise ValueError("Invalid time argument")

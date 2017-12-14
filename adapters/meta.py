@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
-from __future__ import absolute_import
+
+
 
 import collections
 
@@ -15,7 +15,7 @@ class AdapterMetaClass(type):
     def __new__(meta, name, bases, attrs):
         fields = [
             (key, attrs.pop(key))
-            for key in attrs.keys() if isinstance(attrs[key], BaseField)
+            for key in list(attrs.keys()) if isinstance(attrs[key], BaseField)
         ]
 
         for base in reversed(bases):
