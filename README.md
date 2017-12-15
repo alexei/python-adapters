@@ -1,5 +1,7 @@
 # Adapters
 
+[![Build Status](https://travis-ci.org/alexei/python-adapters.svg?branch=master)](https://travis-ci.org/alexei/python-adapters)
+
 Adapters allow converting data from one structure to another.
 
 The adapters work very similar to `Serializers` in Django REST framework. They are not tied with Django nor DRF in any way, instead they probide a generic way of transforming an object to another.
