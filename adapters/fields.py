@@ -23,8 +23,9 @@ __all__ = [
 
 
 class AdapterMethodField(BaseField):
-    def __init__(self, method_name=None):
+    def __init__(self, method_name=None, **kwargs):
         self.method_name = method_name
+        super(AdapterMethodField, self).__init__(**kwargs)
 
     def bind(self, field_name, adapter):
         self.field_name = field_name
