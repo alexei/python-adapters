@@ -5,6 +5,7 @@ import dateutil.parser
 from decimal import Decimal
 
 from .base import BaseField
+from .utils import EMPTY_VALUES, undefined
 
 
 __all__ = [
@@ -36,16 +37,21 @@ class AdapterMethodField(BaseField):
 
 class BooleanField(BaseField):
     def adapt(self, data):
+        if data in EMPTY_VALUES or data is undefined:
+            data = False
+        return super(BooleanField, self).adapt(data)
+
+    def prepare(self, data):
         return bool(data)
 
 
 class CharField(BaseField):
-    def adapt(self, data):
+    def prepare(self, data):
         return str(data)
 
 
 class DateField(BaseField):
-    def adapt(self, data):
+    def prepare(self, data):
         if isinstance(data, datetime.date):
             return data
         elif isinstance(data, str):
@@ -55,7 +61,7 @@ class DateField(BaseField):
 
 
 class DateTimeField(BaseField):
-    def adapt(self, data):
+    def prepare(self, data):
         if isinstance(data, datetime.datetime):
             return data
         elif isinstance(data, str):
@@ -65,7 +71,7 @@ class DateTimeField(BaseField):
 
 
 class DecimalField(BaseField):
-    def adapt(self, data):
+    def prepare(self, data):
         return Decimal(data)
 
 
@@ -74,17 +80,17 @@ class VerbatimField(BaseField):
 
 
 class FloatField(BaseField):
-    def adapt(self, data):
+    def prepare(self, data):
         return float(data)
 
 
 class IntField(BaseField):
-    def adapt(self, data):
+    def prepare(self, data):
         return int(data)
 
 
 class TimeField(BaseField):
-    def adapt(self, data):
+    def prepare(self, data):
         if isinstance(data, datetime.time):
             return data
         elif isinstance(data, str):

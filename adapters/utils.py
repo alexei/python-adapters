@@ -3,7 +3,14 @@
 import collections
 
 
-__all__ = ['BindingDict', 'undefined']
+__all__ = ['BindingDict', 'EMPTY_VALUES', 'undefined']
+
+
+EMPTY_VALUES = [None, '', [], (), {}]
+
+
+class undefined:
+    pass
 
 
 class BindingDict(collections.MutableMapping):
@@ -29,7 +36,3 @@ class BindingDict(collections.MutableMapping):
 
     def __repr__(self):
         return dict.__repr__(self.fields)
-
-
-class undefined:
-    pass

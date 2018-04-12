@@ -29,7 +29,6 @@ class AdapterTest(unittest.TestCase):
                 'country': 'US',
             })
         })
-
         self.assertEqual(actual.first_name, expected.first_name)
         self.assertEqual(actual.last_name, expected.last_name)
         self.assertEqual(actual.address.line1, expected.address.line1)
