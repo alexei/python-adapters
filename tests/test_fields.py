@@ -139,3 +139,19 @@ class FieldsTest(unittest.TestCase):
             'avg': 3,
         }
         self.assertDictEqual(actual, expected)
+
+    def test_optional_field(self):
+        data = [None, '', [], (), {}]
+        expected = adapters.utils.undefined
+        field = adapters.IntField(required=False)
+        for entry in data:
+            actual = field.adapt(entry)
+            self.assertEqual(actual, expected)
+
+    def test_optional_field_with_default(self):
+        data = [None, '', [], (), {}]
+        expected = 42
+        field = adapters.IntField(required=False, default=expected)
+        for entry in data:
+            actual = field.adapt(entry)
+            self.assertEqual(actual, expected)

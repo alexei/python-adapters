@@ -36,9 +36,9 @@ class Adapter(BaseField):
         instance = self.get_instance()
         for field_name, field in self.fields.items():
             value = field.get_attribute(data or self.data)
-            if value is undefined:
-                continue
             adapted_value = field.adapt(value)
+            if adapted_value is undefined:
+                continue
             if isinstance(instance, collections.Mapping):
                 instance[field_name] = adapted_value
             else:
