@@ -19,5 +19,6 @@ setup(
     install_requires=[
         'future',
         'python-dateutil>=2.6.0',
+        'six',
     ],
 )
