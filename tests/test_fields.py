@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 import datetime
 from decimal import Decimal
 import unittest
@@ -14,6 +16,11 @@ class FieldsTest(unittest.TestCase):
     def test_char_field(self):
         actual = adapters.CharField().adapt('Los Angeles')
         expected = 'Los Angeles'
+        self.assertEqual(actual, expected)
+
+    def test_unicode_field(self):
+        actual = adapters.CharField().adapt('Alexandru Mărășteanu')
+        expected = 'Alexandru Mărășteanu'
         self.assertEqual(actual, expected)
 
     def test_int_field(self):

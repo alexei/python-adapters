@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from builtins import str
 import datetime
 import dateutil.parser
 from decimal import Decimal

@@ -16,5 +16,8 @@ setup(
     url='https://github.com/alexei/python-adapters',
     download_url='https://github.com/alexei/python-adapters/archive/2.0.1.tar.gz',  # noqa
     keywords=['adapter pattern'],
-    install_requires=['python-dateutil>=2.6.0'],
+    install_requires=[
+        'future',
+        'python-dateutil>=2.6.0',
+    ],
 )
