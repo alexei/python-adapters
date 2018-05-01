@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from builtins import str
 import datetime
 import dateutil.parser
 from decimal import Decimal
+import six
 
 from .base import BaseField
 from .utils import EMPTY_VALUES, undefined
@@ -55,7 +57,7 @@ class DateField(BaseField):
     def prepare(self, data):
         if isinstance(data, datetime.date):
             return data
-        elif isinstance(data, str):
+        elif isinstance(data, six.string_types):
             return dateutil.parser.parse(data).date()
         else:
             raise ValueError("Invalid date argument")
@@ -65,7 +67,7 @@ class DateTimeField(BaseField):
     def prepare(self, data):
         if isinstance(data, datetime.datetime):
             return data
-        elif isinstance(data, str):
+        elif isinstance(data, six.string_types):
             return dateutil.parser.parse(data)
         else:
             raise ValueError("Invalid date argument")
@@ -94,7 +96,7 @@ class TimeField(BaseField):
     def prepare(self, data):
         if isinstance(data, datetime.time):
             return data
-        elif isinstance(data, str):
+        elif isinstance(data, six.string_types):
             return dateutil.parser.parse(data).timetz()
         else:
             raise ValueError("Invalid time argument")
