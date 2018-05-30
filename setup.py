@@ -9,12 +9,12 @@ except ImportError:
 setup(
     name='python-adapters',
     packages=['adapters'],
-    version='2.0.2',
+    version='2.1.0',
     description='Python adapters',
     author='Alexei',
     author_email='hello@alexei.ro',
     url='https://github.com/alexei/python-adapters',
-    download_url='https://github.com/alexei/python-adapters/archive/2.0.2.tar.gz',  # noqa
+    download_url='https://github.com/alexei/python-adapters/archive/2.1.0.tar.gz',  # noqa
     keywords=['adapter pattern'],
     install_requires=[
         'future',
