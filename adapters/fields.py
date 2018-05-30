@@ -19,6 +19,7 @@ __all__ = [
     'DecimalField',
     'FloatField',
     'IntField',
+    'ListField',
     'TimeField',
     'VerbatimField',
 ]
@@ -78,10 +79,6 @@ class DecimalField(BaseField):
         return Decimal(data)
 
 
-class VerbatimField(BaseField):
-    pass
-
-
 class FloatField(BaseField):
     def prepare(self, data):
         return float(data)
@@ -92,6 +89,15 @@ class IntField(BaseField):
         return int(data)
 
 
+class ListField(BaseField):
+    def __init__(self, child, **kwargs):
+        self.child = child
+        super(ListField, self).__init__(**kwargs)
+
+    def prepare(self, data):
+        return [self.child().adapt(item) for item in data]
+
+
 class TimeField(BaseField):
     def prepare(self, data):
         if isinstance(data, datetime.time):
@@ -100,3 +106,7 @@ class TimeField(BaseField):
             return dateutil.parser.parse(data).timetz()
         else:
             raise ValueError("Invalid time argument")
+
+
+class VerbatimField(BaseField):
+    pass
