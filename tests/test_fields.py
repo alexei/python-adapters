@@ -162,3 +162,8 @@ class FieldsTest(unittest.TestCase):
         for entry in data:
             actual = field.adapt(entry)
             self.assertEqual(actual, expected)
+
+    def test_list_field(self):
+        actual = adapters.ListField(adapters.CharField).adapt([1, 2, 3])
+        expected = ['1', '2', '3']
+        self.assertEqual(actual, expected)
