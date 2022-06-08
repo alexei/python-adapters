@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import collections
+import six
 
 
 __all__ = ['BindingDict', 'EMPTY_VALUES', 'undefined']
@@ -13,7 +14,7 @@ class undefined:
     pass
 
 
-class BindingDict(collections.MutableMapping):
+class BindingDict(six.moves.collections_abc.MutableMapping):
     def __init__(self, adapter):
         self.adapter = adapter
         self.fields = collections.OrderedDict()

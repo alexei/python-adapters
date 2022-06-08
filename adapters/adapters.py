@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import collections
 import copy
 import six
 
@@ -39,7 +38,7 @@ class Adapter(BaseField):
             adapted_value = field.adapt(value)
             if adapted_value is undefined:
                 continue
-            if isinstance(instance, collections.Mapping):
+            if isinstance(instance, six.moves.collections_abc.Mapping):
                 instance[field_name] = adapted_value
             else:
                 setattr(instance, field_name, adapted_value)
