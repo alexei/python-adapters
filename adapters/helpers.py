@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import collections
+import six
 
 from .utils import undefined
 
@@ -14,16 +14,16 @@ def get_attribute(obj, attrs):
             return undefined
 
         try:
-            if isinstance(obj, collections.Mapping):
+            if isinstance(obj, six.moves.collections_abc.Mapping):
                 obj = obj[attr]
-            elif isinstance(obj, collections.Iterable):
+            elif isinstance(obj, six.moves.collections_abc.Iterable):
                 obj = obj[int(attr)]
             else:
                 obj = getattr(obj, attr)
         except Exception:
             return undefined
 
-        if isinstance(obj, collections.Callable):
+        if isinstance(obj, six.moves.collections_abc.Callable):
             obj = obj()
 
     return obj

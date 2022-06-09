@@ -18,7 +18,7 @@ setup(
     keywords=['adapter pattern'],
     install_requires=[
         'future',
-        'python-dateutil>=2.6.0',
-        'six',
+        'python-dateutil>=2.7.0',
+        'six>=1.13.0',
     ],
 )
